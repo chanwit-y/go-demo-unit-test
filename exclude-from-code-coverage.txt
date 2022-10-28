@@ -1,5 +1,5 @@
 internal/customer/handler.go
 internal/customer/mock_data.go
-internal/customer/repository_mock.go
+internal/customer/mock_repository.go
 internal/customer/repository.go
 internal/customer/router.go
