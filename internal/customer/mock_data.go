@@ -6,6 +6,7 @@ import (
 )
 
 var (
+	//Begin Test Find
 	MockCustomers = []*entity.Customer{
 		{
 			Code:  "0001",
@@ -19,5 +20,20 @@ var (
 		Data:    MockCustomers,
 		Message: "",
 		Errors:  nil,
+	}
+	//End Test Find
+
+	MockCustomersNoData   = []*entity.Customer{}
+	MockWantCusomerNoData = model.Respone[[]*entity.Customer]{
+		Data:    MockCustomersNoData,
+		Message: "",
+		Errors:  nil,
+	}
+
+	MockCustomerParamNoCode = entity.Customer{
+		Code:  "",
+		Name:  "cus-1",
+		Tel:   "xxxxxxx",
+		Email: "test@mail.com",
 	}
 )

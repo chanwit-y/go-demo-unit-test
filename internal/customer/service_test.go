@@ -2,6 +2,7 @@
 package customer
 
 import (
+	"errors"
 	"go-demo-unit-test/domain/entity"
 	"go-demo-unit-test/domain/model"
 	"reflect"
@@ -18,6 +19,11 @@ func TestNewService(t *testing.T) {
 		want service
 	}{
 		// TODO: Add test cases.
+		{
+			name: "NewService",
+			args: args{NewMockRepository(t)},
+			want: service{NewMockRepository(t)},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -32,7 +38,6 @@ func Test_service_Find(t *testing.T) {
 	type fields struct {
 		repository Repository
 	}
-	mock := NewMockRepository(t)
 	tests := []struct {
 		name    string
 		fields  fields
@@ -41,9 +46,22 @@ func Test_service_Find(t *testing.T) {
 	}{
 		// TODO: Add test cases.
 		{
-			name:   "Test Find have data",
-			fields: fields{repository: NewMock(mock, "Find", MockCustomers)},
+			name:   "Test Find",
+			fields: fields{repository: NewMockData(NewMockRepository(t), "Find", MockCustomers)},
 			want:   MockWantCusomerFind,
+		},
+		{
+			name:   "Test Find not found",
+			fields: fields{repository: NewMockData(NewMockRepository(t), "Find", MockCustomersNoData)},
+			want:   MockWantCusomerNoData,
+		},
+		{
+			name: "Test Find repository error",
+			fields: fields{
+				repository: NewMockError(
+					NewMockRepository(t),
+					"Find")},
+			wantErr: true,
 		},
 	}
 	for _, tt := range tests {
@@ -72,10 +90,31 @@ func Test_service_Create(t *testing.T) {
 		name    string
 		fields  fields
 		args    args
-		want    entity.Customer
+		want    model.Respone[entity.Customer]
 		wantErr bool
 	}{
 		// TODO: Add test cases.
+		{
+			name: "Create customer",
+			args: args{data: *MockCustomers[0]},
+			fields: fields{
+				repository: NewMockDataParam(
+					NewMockRepository(t),
+					"Create",
+					*MockCustomers[0],
+					*MockCustomers[0])},
+			want: model.Respone[entity.Customer]{
+				Data: *MockCustomers[0],
+			},
+		},
+		{
+			name: "Create customer error param code",
+			args: args{data: MockCustomerParamNoCode},
+			want: model.Respone[entity.Customer]{
+				Data:   entity.Customer{},
+				Errors: errors.New("customer code is not empty"),
+			},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

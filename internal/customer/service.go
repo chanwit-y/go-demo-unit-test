@@ -2,6 +2,7 @@
 package customer
 
 import (
+	"errors"
 	"go-demo-unit-test/domain/entity"
 	"go-demo-unit-test/domain/model"
 )
@@ -9,7 +10,7 @@ import (
 type (
 	Service interface {
 		Find() (model.Respone[[]*entity.Customer], error)
-		Create(data entity.Customer) (entity.Customer, error)
+		Create(data entity.Customer) (model.Respone[entity.Customer], error)
 		Update(data entity.Customer) error
 		Delete(id uint) error
 	}
@@ -35,8 +36,16 @@ func (s service) Find() (model.Respone[[]*entity.Customer], error) {
 	return res, nil
 }
 
-func (s service) Create(data entity.Customer) (entity.Customer, error) {
-	return s.repository.Create(data)
+func (s service) Create(data entity.Customer) (model.Respone[entity.Customer], error) {
+	res := model.Respone[entity.Customer]{}
+	if data.Code == "" {
+		res.Errors = errors.New("customer code is not empty")
+		return res, nil
+	}
+	data, err := s.repository.Create(data)
+	res.Data = data
+
+	return res, err
 }
 
 func (s service) Update(data entity.Customer) error {
