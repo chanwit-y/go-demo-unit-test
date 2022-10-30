@@ -10,8 +10,8 @@ type (
 	Service interface {
 		Find() (model.Respone[[]*entity.Customer], error)
 		Create(data entity.Customer) (model.Respone[entity.Customer], error)
-		Update(data entity.Customer) error
-		Delete(id uint) error
+		Update(data entity.Customer) (model.Respone[entity.Customer], error)
+		Delete(id uint) (model.Respone[entity.Customer], error)
 	}
 	service struct {
 		repository Repository
@@ -50,11 +50,34 @@ func (s service) Create(data entity.Customer) (model.Respone[entity.Customer], e
 	return res, err
 }
 
-func (s service) Update(data entity.Customer) error {
-	return s.repository.Update(data)
+func (s service) Update(data entity.Customer) (model.Respone[entity.Customer], error) {
+	res := model.Respone[entity.Customer]{
+		Data:    data,
+		Message: "Update customer is success",
+	}
+	err := s.repository.Update(data)
 
+	if err != nil {
+		res.Message = err.Error()
+		res.Error = true
+		return res, nil
+	}
+
+	return res, err
 }
 
-func (s service) Delete(id uint) error {
-	return s.repository.Delete(id)
+func (s service) Delete(id uint) (model.Respone[entity.Customer], error) {
+	res := model.Respone[entity.Customer]{
+		Message: "Delete customer is success",
+	}
+	err := s.repository.Delete(id)
+
+	if err != nil {
+		res.Message = err.Error()
+		res.Error = true
+		return res, nil
+	}
+
+	return res, err
+
 }

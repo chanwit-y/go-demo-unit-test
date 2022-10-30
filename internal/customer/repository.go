@@ -41,6 +41,7 @@ func (r repository) Create(data entity.Customer) (entity.Customer, error) {
 func (r repository) Update(data entity.Customer) error {
 	customer := query.Customer
 	_, err := customer.WithContext(ctx).Where(customer.ID.Eq(data.ID)).Updates(structs.Map(data))
+
 	return err
 }
 
