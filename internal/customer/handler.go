@@ -2,6 +2,7 @@ package customer
 
 import (
 	"encoding/json"
+	"fmt"
 	"go-demo-unit-test/domain/entity"
 
 	"github.com/gofiber/fiber/v2"
@@ -30,7 +31,10 @@ func (h handle) Create(c *fiber.Ctx) error {
 	var req entity.Customer
 	json.Unmarshal(c.Body(), &req)
 
+	fmt.Printf("Create \n")
 	res, _ := h.service.Create(req)
+
+	fmt.Printf("end create %+v \n", res)
 
 	return c.JSON(res)
 }

@@ -2,7 +2,6 @@
 package customer
 
 import (
-	"errors"
 	"go-demo-unit-test/domain/entity"
 	"go-demo-unit-test/domain/model"
 	"reflect"
@@ -111,8 +110,9 @@ func Test_service_Create(t *testing.T) {
 			name: "Create customer error param code",
 			args: args{data: MockCustomerParamNoCode},
 			want: model.Respone[entity.Customer]{
-				Data:   entity.Customer{},
-				Errors: errors.New("customer code is not empty"),
+				Data:    MockCustomerParamNoCode,
+				Message: "customer code is not empty",
+				Error:   true,
 			},
 		},
 	}

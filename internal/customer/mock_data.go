@@ -19,7 +19,7 @@ var (
 	MockWantCusomerFind = model.Respone[[]*entity.Customer]{
 		Data:    MockCustomers,
 		Message: "",
-		Errors:  nil,
+		Error:   false,
 	}
 	//End Test Find
 
@@ -27,7 +27,7 @@ var (
 	MockWantCusomerNoData = model.Respone[[]*entity.Customer]{
 		Data:    MockCustomersNoData,
 		Message: "",
-		Errors:  nil,
+		Error:   false,
 	}
 
 	MockCustomerParamNoCode = entity.Customer{

@@ -2,7 +2,6 @@
 package customer
 
 import (
-	"errors"
 	"go-demo-unit-test/domain/entity"
 	"go-demo-unit-test/domain/model"
 )
@@ -39,7 +38,10 @@ func (s service) Find() (model.Respone[[]*entity.Customer], error) {
 func (s service) Create(data entity.Customer) (model.Respone[entity.Customer], error) {
 	res := model.Respone[entity.Customer]{}
 	if data.Code == "" {
-		res.Errors = errors.New("customer code is not empty")
+		msg := "customer code is not empty"
+		res.Data = data
+		res.Message = msg
+		res.Error = true
 		return res, nil
 	}
 	data, err := s.repository.Create(data)
