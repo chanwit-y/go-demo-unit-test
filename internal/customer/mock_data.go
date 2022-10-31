@@ -20,12 +20,6 @@ var (
 	//Begin Test Find
 	MockCustomers = []*entity.Customer{
 		&MockCustomer,
-		// {
-		// 	Code:  "0001",
-		// 	Name:  "cus-1",
-		// 	Tel:   "xxxxxxx",
-		// 	Email: "test@mail.com",
-		// },
 	}
 
 	MockWantCusomerFind = model.Respone[[]*entity.Customer]{

@@ -1,4 +1,4 @@
-package customer
+package product
 
 import (
 	"go-demo-unit-test/pkg/db"
@@ -12,9 +12,9 @@ func Router(r fiber.Router) {
 	service := NewService(repository)
 	handler := NewHandler(service)
 
-	groupRoute := r.Group("/customer")
+	groupRoute := r.Group("/product")
 	groupRoute.Get("", handler.Get)
 	groupRoute.Post("", handler.Create)
 	groupRoute.Post("", handler.Update)
-	groupRoute.Delete("/:id", handler.Delete)
+	groupRoute.Post("/:id", handler.Delete)
 }

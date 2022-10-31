@@ -1,4 +1,4 @@
-package customer
+package product
 
 import (
 	"encoding/json"
@@ -30,7 +30,7 @@ func (h handler) Get(c *fiber.Ctx) error {
 }
 
 func (h handler) Create(c *fiber.Ctx) error {
-	var req entity.Customer
+	var req entity.Product
 	json.Unmarshal(c.Body(), &req)
 	res, _ := h.service.Create(req)
 
@@ -38,7 +38,7 @@ func (h handler) Create(c *fiber.Ctx) error {
 }
 
 func (h handler) Update(c *fiber.Ctx) error {
-	var req entity.Customer
+	var req entity.Product
 	json.Unmarshal(c.Body(), &req)
 	res, _ := h.service.Update(req)
 
