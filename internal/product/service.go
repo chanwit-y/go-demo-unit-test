@@ -38,6 +38,12 @@ func (s service) Find() (model.Respone[[]*entity.Product], error) {
 func (s service) Create(data entity.Product) (model.Respone[entity.Product], error) {
 	res := model.Respone[entity.Product]{}
 
+	if data.Code == "" {
+		res.Error = true
+		res.Message = "code is not empty"
+		return res, nil
+	}
+
 	data, err := s.repository.Create(data)
 	res.Data = data
 
