@@ -3,3 +3,10 @@ internal/customer/mock_data.go
 internal/customer/mock_repository.go
 internal/customer/repository.go
 internal/customer/router.go
+
+
+internal/product/handler.go
+internal/product/mock_data.go
+internal/product/mock_repository.go
+internal/product/repository.go
+internal/product/router.go
